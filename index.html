@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Clone Nested Elements</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <form action="">
+        <div id="main">
+
+            <div class="cloneDiv">
+                <!-- Your form inputs with class 'cloneable' -->
+                <input type="text" name="input1[]" class="cloneItem" value="Value 1">
+                <input type="text" name="input2[]" class="cloneItem" value="Value 2">
+                <select name="car[]" class="cloneItem">
+                    <option value="tata">Tata</option>
+                    <option value="mahindra">Mahindra</option>
+                    <option value="ford">Ford</option>
+                    <option value="force">Force</option>
+                </select>
+                <!-- Button to trigger cloning -->
+                <button type="button" class="cloneBtn">Clone</button>
+            </div>
+        </div>
+        <button type="submit">Go</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Attach click event handler to all .cloneBtn buttons
+            $(document).on('click', '.cloneBtn', function () {
+                // Find the closest .cloneDiv relative to the clicked button
+                var closestCloneDiv = $(this).closest('.cloneDiv');
+
+                // Clone the closest .cloneDiv and its contents
+                var clonedDiv = closestCloneDiv.clone();
+
+                // Clear input value in cloned form (optional)
+                // clonedDiv.find('input').val('');
+                var selectedOption = closestCloneDiv.find('select').val();
+
+                // Set selected option in cloned select element
+                clonedDiv.find('select').val(selectedOption);
+                // Append the cloned div after the closest .cloneDiv
+                closestCloneDiv.after(clonedDiv);
+            });
+
+            // Event delegation for submitButton inside .cloneDiv
+            $(document).on('click', '.submitButton', function () {
+                // Get the input value within the same .cloneDiv
+                var inputVal = $(this).closest('form').find('input').val();
+
+                // Example: Display the input value in an alert
+                alert('Submitted value: ' + inputVal);
+            });
+        });
+    </script>
+</body>
+
+</html>
